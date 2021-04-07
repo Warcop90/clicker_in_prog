@@ -1,0 +1,84 @@
+import pygame
+
+width, height = 500,500
+
+win = pygame.display.set_mode((width,height))
+
+pygame.display.set_caption("Clicker Game")
+
+
+dark = (110, 110, 110)
+light = (171, 171, 171)
+
+
+clicks = 0
+
+def showclick():
+    pygame.font.init()
+    font = pygame.font.SysFont("American Typewriter", 60)
+    text1 = font.render(str(clicks), True, (0, 0, 0))
+
+    win.blit(( "clicks: " + text1) , (250,50) )
+
+def button():
+    global clicks
+
+
+    # initialises font
+    pygame.font.init()
+    font = pygame.font.SysFont("American Typewriter", 35)
+    text = font.render("click", True , (0,0,0))
+
+
+    mouse = pygame.mouse.get_pos()
+
+    
+    if mouse[0] >= 200 and mouse[0] <= 300 and mouse[1]>= 375 and mouse[1] <= 425:
+
+        # with position of box, position is from TOP-LEFT (-50 and -25 to get box pos to middle)
+        pygame.draw.rect(win, dark, [width/2-50,height/2+125,100,50])
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                clicks += 1
+
+
+
+
+
+    else:
+        pygame.draw.rect(win, light, [width/2-50,height/2+125,100,50])
+
+
+    win.blit(text,(width/2-28,height/2+137))
+
+
+def showclick():
+    global clicks
+
+    pygame.font.init()
+    font = pygame.font.SysFont("American Typewriter", 60)
+    text = font.render(str(clicks), True, (0, 0, 0))
+
+    win.blit(text,(250,50))
+    
+    pygame.display.update()
+
+def main():
+    clock = pygame.time.Clock()
+
+    loop = True
+    while loop:
+        clock.tick(60)
+        win.fill((121, 219, 190))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                loop = False
+
+        button()
+        showclick()
+        
+        pygame.display.update()
+    pygame.quit()
+
+main()
